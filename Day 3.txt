@@ -1,0 +1,157 @@
+#include <iostream>
+#include <stdlib.h>
+
+using namespace std;
+
+struct node
+{
+    int data;
+    struct node* next;
+};
+
+struct node* head;
+
+int insert_begin(int);
+int insert_end(int);
+void deletion_begin();
+void deletion_end();
+void display();
+
+int insert_begin(int item)
+{
+    node* ptr = new node();
+    ptr->data = item;
+
+    if(!head)
+    {
+        head = ptr;
+        head->next = NULL;
+    }
+    else
+    {
+        ptr->next = head;
+        head = ptr;
+    }
+    return 0;
+}
+
+int insert_end(int item)
+{
+    node* ptr = new node();
+    node* temp = new node();
+    temp = head;
+     
+    ptr->data = item;
+
+    if(!head)
+    {
+        head = ptr;
+        head->next = NULL;
+    }
+    else
+    {
+        while(temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        temp->next = ptr;
+        ptr->next = NULL;
+    }
+    return 0;
+}
+
+void deletion_begin()
+{
+    node* ptr = head;
+
+    if (!head)
+    {
+        cout<<"\nList is empty.";
+    }
+    else
+    {
+        head = ptr->next;
+        delete ptr;
+    }
+}
+
+void deletion_end()
+{
+    node* ptr = head;
+    node* temp = head;
+
+    if (!head)
+    {
+        cout<<"\nList is empty.";
+    }
+    else
+    {
+        while(temp->next != NULL)
+        {
+            ptr = temp;
+            temp = temp->next;
+        }
+        ptr->next = NULL;
+        delete temp;
+    }
+}
+
+void display()
+{
+    node* ptr = head;
+
+    if (!head)
+    {
+        cout<<"\nList is empty.";
+    }
+
+    while(ptr != NULL)
+    {
+        cout<< ptr->data << " ";
+        ptr = ptr->next;
+    }
+}
+
+int main()
+{
+    char ch;
+    int c, num;
+
+    do
+    {
+        cout<<"\n*************MENU***************\n";
+        cout<<"\n1. Insert at the beginning.";
+        cout<<"\n2. Insert at the end.";
+        cout<<"\n3. Delete from the beginning.";
+        cout<<"\n4. Delete from the end.";
+        cout<<"\n5. Display the list.";
+
+        cout<<"\n\nEnter your choice: ";
+        cin>>c;
+        
+        switch(c)
+        {
+            case 1: cout<<"\nNumber to insert at the beginning: ";
+                    cin>>num;
+                    insert_begin(num);
+                    break;
+            case 2: cout<<"\nNumber to insert at the end: ";
+                    cin>>num;
+                    insert_end(num);
+                    break;
+            case 3: deletion_begin();
+                    break;
+            case 4: deletion_end();
+                    break;
+            case 5: cout<<"\nLinked List made by you: \n";
+                    display();
+                    break;
+            default: cout<<"\nEnter valid choice\n";
+        }
+        cout<<"\nDo you want to continue (y/n): ";
+        cin>>ch;
+        
+    } while(ch=='Y' || ch=='y');
+
+    return 0;
+}
